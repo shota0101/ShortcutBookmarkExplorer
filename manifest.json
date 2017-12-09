@@ -1,0 +1,31 @@
+{
+  "update_url": "https://clients2.google.com/service/update2/crx",
+  "name": "ShortcutBookmarkExplorer",
+  "version": "0.0.1",
+  "manifest_version": 2,
+  "description": "Open bookmark quickly.",
+  "author": "Shota Hayashi",
+  "homepage_url": "https://github.com/shota0101/ShortcutBookmarkExplorer",
+  "icons": {
+    "16": "images/16.png",
+    "48": "images/48.png",
+    "128": "images/128.png"
+  },
+  "permissions": [
+    "tabs"
+  ],
+  "browser_action": {
+    "default_icon": "images/48.png",
+    "default_popup": "browser_action.html"
+  },
+  "commands": {
+    "_execute_browser_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+L",
+        "windows": "Ctrl+Shift+L",
+        "mac": "Ctrl+Shift+L",
+        "linux": "Ctrl+Shift+L"
+      }
+    }
+  }
+}
