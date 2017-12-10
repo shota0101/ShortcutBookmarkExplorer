@@ -130,8 +130,8 @@ window.onload = function() {
 	    url : node[index].url
 	  });
 	} else {
-	  node = node[index].children;
 	  createHTML(node[index].children);
+	  node = node[index].children;
 	}
       }
       
