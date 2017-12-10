@@ -22,10 +22,10 @@
   "commands": {
     "_execute_browser_action": {
       "suggested_key": {
-        "default": "Ctrl+Shift+L",
-        "windows": "Ctrl+Shift+L",
-        "mac": "Ctrl+Shift+L",
-        "linux": "Ctrl+Shift+L"
+        "default": "Ctrl+K",
+        "windows": "Ctrl+K",
+        "mac": "Ctrl+K",
+        "linux": "Ctrl+K"
       }
     }
   }

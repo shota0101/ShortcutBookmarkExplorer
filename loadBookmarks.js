@@ -1,11 +1,16 @@
 var keies = 'asdfghjklqwertyuiopzxcvbnm1234567890ASDFGHJKLQWERTYUIOPZXCVBNM';
+var node = null;
 
 function isFolder(node) {
-  if(node.children === undefined) {
-    return false;
-  } else {
+  if(node.children)
     return true;
-  }
+  return false;
+}
+
+function isPage(node) {
+  if(node.children)
+    return false;
+  return true;
 }
 
 function getDomain(url) {
@@ -24,20 +29,6 @@ function getDomain(url) {
 // }
 
 function createHTML(node){
-  var html = '';
-  for(var i = 0; i < node.length; i++){
-    var title = node[i].title;
-    html += title;
-    if( isFolder(node[i]) ) {
-      html += '<hr/>';
-      continue;
-    }
-    if(title === '') {
-      html += node[i].url;
-    }
-    html += '<hr/>';
-  }
-
   var windowIds = [];
   var keyAssigns = [];
   var elements = '';
@@ -73,14 +64,19 @@ function createHTML(node){
     elements += '<div class="tab_element">';
     elements += '<div class="key">' + keies[i] + '</div>';
     elements += '<div class="tab_block">';
-    if( isFolder(node[i]) ) {
+
+    // フォルダ
+    if( isFolder(node[i]) )
       elements += '<img src="/images/folder64.png" width="16" class="favicon" />';
-    }
+
+    // タイトルがなければURLを表示
     if(node[i].title === '') {
-      elements += '<span class="tab_title">' + node[i].url.substr(0, titleLimit) + '</span>';
+      if(node[i].url !== undefined)
+	elements += '<span class="tab_title">' + node[i].url.substr(0, titleLimit) + '</span>';
     } else {
       elements += '<span class="tab_title">' + node[i].title.substr(0, titleLimit) + '</span>';
     }
+    
     elements += '</div>';
     elements += '<div class="clear"></div>';
     elements += '</div>';
@@ -107,20 +103,40 @@ function createHTML(node){
 window.onload = function() {
   chrome.bookmarks.getTree(function(roots){
 
-    var bookmarks = [];
-    var bookmarkBar = roots[0].children[0].children;
-    
-    createHTML(bookmarkBar);
+    // 初期化
+    node = roots[0].children[0].children;
+    createHTML(node);
     
     window.addEventListener('keydown', function(e){
-      if(e.shiftKey){
-        targetTabId = keyAssigns[String.fromCharCode(e.keyCode)];
-      }else{
-        targetTabId = keyAssigns[String.fromCharCode((e.keyCode)).toLowerCase()];
+
+      var code = String.fromCharCode(e.keyCode);
+
+      // if(e.metaKey) { // ⌘
+      // 	document.getElementById('bookmark_list').innerHTML = '⌘';
+      // }else if(e.ctrlKey) { // ^
+      // 	document.getElementById('bookmark_list').innerHTML = '^';
+      // }else if(e.altKey) { // ⌥
+      // 	document.getElementById('bookmark_list').innerHTML = '⌥';
+      // }
+
+      var index = -1;
+      if(e.shiftKey === false) { // ⇧
+	code = code.toLowerCase();
       }
-      targetWindowId = windowIds[targetTabId];
-      chrome.tabs.update(targetTabId, {selected: true});
-      chrome.windows.update(targetWindowId, {focused: true});
+      index = keies.indexOf(code);
+      if(index !== -1) {
+	if( isPage(node[index]) ) {
+	  chrome.tabs.create({
+	    url : node[index].url
+	  });
+	} else {
+	  createHTML(node[index].children);
+	}
+      }
+      
+      // targetWindowId = windowIds[targetTabId];
+      // chrome.tabs.update(targetTabId, {selected: true});
+      // chrome.windows.update(targetWindowId, {focused: true});
     });
 
   });
