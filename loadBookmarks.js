@@ -65,9 +65,16 @@ function createHTML(node){
     elements += '<div class="key">' + keies[i] + '</div>';
     elements += '<div class="tab_block">';
 
-    // フォルダ
-    if( isFolder(node[i]) )
+    // アイコンの表示
+    if( isFolder(node[i]) ) // フォルダ
       elements += '<img src="/images/folder64.png" width="16" class="favicon" />';
+    else{
+      // ページ
+      var domain = getDomain(node[i].url);
+      var faviconURL = localStorage.getItem(domain);
+      if(faviconURL !== null)
+	elements += '<img src="' + faviconURL + '" width="16" class="favicon" />';
+    }
 
     // タイトルがなければURLを表示
     if(node[i].title === '') {
@@ -106,7 +113,7 @@ window.onload = function() {
     // 初期化
     node = roots[0].children[0].children;
     createHTML(node);
-    
+
     window.addEventListener('keydown', function(e){
 
       var code = String.fromCharCode(e.keyCode);
@@ -141,4 +148,13 @@ window.onload = function() {
     });
 
   });
+
+  chrome.tabs.query({}, function(tabs){
+    tabs.forEach(function( tab ) {
+      var domain = getDomain(tab.url);
+      if(domain !== null && domain !== undefined && domain !== '')
+	localStorage.setItem(getDomain(tab.url), tab.favIconUrl);
+    });
+  });
+
 }
