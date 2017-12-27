@@ -17,17 +17,6 @@ function getDomain(url) {
   return url.split('/')[2];
 }
 
-// function getFaviconUrl(domain) {
-//   const request = new XMLHttpRequest();
-//   // request.open("GET", `https://api.github.com`);
-//   request.open("GET", `https://www.google.com/s2/favicons?domain=developer.chrome.com`);
-//   request.addEventListener("load", (event) => {
-// 	console.log(event.target.status); // => 200
-// 	console.log(event.target.responseText);
-//   });
-//   request.send();
-// }
-
 function createHTML(node){
   var windowIds = [];
   var keyAssigns = [];
@@ -87,9 +76,6 @@ function createHTML(node){
     elements += '</div>';
     elements += '<div class="clear"></div>';
     elements += '</div>';
-
-    // keyAssigns[keies[i]] = node[i].id;
-    // windowIds[tabs[i].id] = tabs[i].windowId;
   }
 
   document.getElementById('bookmark_list').innerHTML = elements;
@@ -142,9 +128,6 @@ window.onload = function() {
 	}
       }
       
-      // targetWindowId = windowIds[targetTabId];
-      // chrome.tabs.update(targetTabId, {selected: true});
-      // chrome.windows.update(targetWindowId, {focused: true});
     });
 
   });
