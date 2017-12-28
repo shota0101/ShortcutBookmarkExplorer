@@ -123,6 +123,7 @@ function createHTML(node){
 
 }
 
+
 window.onload = function() {
   chrome.bookmarks.getTree(function(roots){
 
@@ -132,12 +133,8 @@ window.onload = function() {
 
     window.addEventListener('keydown', function(e){ // キー入力時の処理
       
-      if(e.key === "Backspace"){
-	if(parentNodeStack.length !== 0){
-	  var parentNode = parentNodeStack[parentNodeStack.length - 1];
-	  node = parentNodeStack.pop();
-	  createHTML(node);
-	}
+      if(e.key === "Backspace"){ // Backspaceで親ディレクトリに戻る
+	backToParentNode();
 	return;
       }
 
@@ -167,3 +164,14 @@ window.onload = function() {
   });
   saveDomainFavIconUrl();
 }
+
+
+function backToParentNode(){
+  if(parentNodeStack.length === 0){
+    return;
+  }
+  var parentNode = parentNodeStack[parentNodeStack.length - 1];
+  node = parentNodeStack.pop();
+  createHTML(node);
+}
+
