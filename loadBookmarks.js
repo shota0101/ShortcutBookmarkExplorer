@@ -29,23 +29,26 @@ function createHTML(node){
   var targetTabId = '';
   var targetWindowId = '';
 
-  if(tabsCount > 50){
-    titleLimit = 8;
-    tabElementsWidth = '190px';
-    tabBlockWidth = '160px';
-  }else if(tabsCount <= 50 && tabsCount > 34){
-    titleLimit = 16;
-    tabElementsWidth = '260px';
-    tabBlockWidth = '230px';
-  }else if(tabsCount <= 34 && tabsCount > 17){
-    titleLimit = 28;
-    tabElementsWidth = '390px';
-    tabBlockWidth = '360px';
-  }else if(tabsCount <= 17 && tabsCount > 0){
-    titleLimit = 58;
-    tabElementsWidth = '790px';
-    tabBlockWidth = '760px';
-  }
+  titleLimit = 58;
+  tabElementsWidth = '790px';
+  tabBlockWidth = '760px';
+  // if(tabsCount > 50){
+  //   titleLimit = 8;
+  //   tabElementsWidth = '190px';
+  //   tabBlockWidth = '160px';
+  // }else if(tabsCount <= 50 && tabsCount > 34){
+  //   titleLimit = 16;
+  //   tabElementsWidth = '260px';
+  //   tabBlockWidth = '230px';
+  // }else if(tabsCount <= 34 && tabsCount > 17){
+  //   titleLimit = 28;
+  //   tabElementsWidth = '390px';
+  //   tabBlockWidth = '360px';
+  // }else if(tabsCount <= 17 && tabsCount > 0){
+  //   titleLimit = 58;
+  //   tabElementsWidth = '790px';
+  //   tabBlockWidth = '760px';
+  // }
 
   for(var i = 0; i < node.length; i++){
     if(i >= keies.length){
