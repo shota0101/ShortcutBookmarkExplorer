@@ -130,9 +130,7 @@ window.onload = function() {
     node = roots[0].children[0].children;
     createHTML(node);
 
-    window.addEventListener('keydown', function(e){
-      
-      var code = String.fromCharCode(e.keyCode);
+    window.addEventListener('keydown', function(e){ // キー入力時の処理
       
       if(e.key === "Backspace"){
 	if(parentNodeStack.length !== 0){
@@ -143,27 +141,29 @@ window.onload = function() {
 	return;
       }
 
-      var isNewTab = e.ctrlKey ? false : true;
+      var isNewTab = e.ctrlKey ? false : true; // 新しいタブで開くかどうか
       // ⌘ → e.metaKey
       // ⌥ → e.altKey
 
-      var index = -1;
-      if(e.shiftKey === false) { // ⇧
+      // 入力キーの取得
+      var code = String.fromCharCode(e.keyCode); // 何故か大文字
+      if(e.shiftKey === false) // Shiftキーが追われてなければ小文字に変換
 	code = code.toLowerCase();
-      }
-      index = keies.indexOf(code);
-      if(index !== -1) {
-	if( isPage(node[index]) ) { // ページを開く場合
-	  openPage(node[index].url, isNewTab);
-	} else { // フォルダを開く場合
-	  parentNodeStack.push(node); // 親フォルダを保存
-	  createHTML(node[index].children);
-	  node = node[index].children;
-	}
-      }
-      
-    });
 
+      // 何番目のノードを開くか
+      var index = keies.indexOf(code);
+      if(index === -1)
+	return; // error
+      var curNode = node[index];
+      
+      if( isPage(curNode) ) { // ページを開く場合
+	openPage(curNode.url, isNewTab);
+      } else { // フォルダを開く場合
+	parentNodeStack.push(node); // 親フォルダを保存（遡るために）
+	node = curNode.children; // 次のキー入力イベントで利用
+	createHTML(node);
+      }
+    });
   });
   saveDomainFavIconUrl();
 }
