@@ -143,8 +143,6 @@ window.onload = function() {
 	    );
 	  }
 	} else { // フォルダを開く場合
-	  console.log("node : " + node[index].id);
-	  console.log("node : " + node[index]);
 	  parentNodeStack.push(node); // 親フォルダを保存
 	  createHTML(node[index].children);
 	  node = node[index].children;
