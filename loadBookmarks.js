@@ -18,6 +18,17 @@ function getDomain(url) {
   return url.split('/')[2];
 }
 
+// タブを走査し、ページのアイコンのURLをドメイン毎に保存
+function saveDomainFavIconUrl() {
+  chrome.tabs.query({}, function(tabs){
+    tabs.forEach(function( tab ) {
+      var domain = getDomain(tab.url);
+      if(domain !== null && domain !== undefined && domain !== '')
+	localStorage.setItem(getDomain(tab.url), tab.favIconUrl);
+    });
+  });
+}
+
 function createHTML(node){
   var windowIds = [];
   var keyAssigns = [];
@@ -152,13 +163,5 @@ window.onload = function() {
     });
 
   });
-
-  chrome.tabs.query({}, function(tabs){
-    tabs.forEach(function( tab ) {
-      var domain = getDomain(tab.url);
-      if(domain !== null && domain !== undefined && domain !== '')
-	localStorage.setItem(getDomain(tab.url), tab.favIconUrl);
-    });
-  });
-
+  saveDomainFavIconUrl();
 }
