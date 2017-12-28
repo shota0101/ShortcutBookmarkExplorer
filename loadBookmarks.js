@@ -29,6 +29,21 @@ function saveDomainFavIconUrl() {
   });
 }
 
+function openPage(url, isNewTab){
+  var data = {
+    url : url
+  };
+  
+  if(isNewTab) { // 新しいタブで開く 
+    chrome.tabs.create(data);
+  } else { // 現在のタブで開く
+    chrome.tabs.update(
+      undefined, // デフォルトで現在のタブを選択
+      data
+    );
+  }
+}
+
 function createHTML(node){
   var windowIds = [];
   var keyAssigns = [];
@@ -142,17 +157,7 @@ window.onload = function() {
       index = keies.indexOf(code);
       if(index !== -1) {
 	if( isPage(node[index]) ) { // ページを開く場合
-	  var data = {
-	    url : node[index].url
-	  };
-	  if(isNewTab) { // 新しいタブで開く 
-	    chrome.tabs.create(data);
-	  } else { // 現在のタブで開く
-	    chrome.tabs.update(
-	      undefined, // デフォルトで現在のタブを選択
-	      data
-	    );
-	  }
+	  openPage(node[index].url, isNewTab);
 	} else { // フォルダを開く場合
 	  parentNodeStack.push(node); // 親フォルダを保存
 	  createHTML(node[index].children);
