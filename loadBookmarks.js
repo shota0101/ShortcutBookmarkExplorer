@@ -1,6 +1,6 @@
 var keies = 'asdfghjklqwertyuiopzxcvbnm1234567890ASDFGHJKLQWERTYUIOPZXCVBNM';
 var node = null;
-var parentNode = null;
+var parentNodeStack = [];
 
 function isFolder(node) {
   if(node.children)
@@ -108,12 +108,14 @@ window.onload = function() {
       
       var code = String.fromCharCode(e.keyCode);
       
-      if(e.key === "Backspace")
-	if(parentNode !== null) {
-	  node = parentNode;
+      if(e.key === "Backspace"){
+	if(parentNodeStack.length !== 0){
+	  var parentNode = parentNodeStack[parentNodeStack.length - 1];
+	  node = parentNodeStack.pop();
 	  createHTML(node);
-	  return;
 	}
+	return;
+      }
 
       var isNewTab = true;
       if(e.altKey) // ⌥
@@ -146,7 +148,9 @@ window.onload = function() {
 	    );
 	  }
 	} else { // フォルダを開く場合
-	  parentNode = node; // 親ディレクトリを記録
+	  console.log("node : " + node[index].id);
+	  console.log("node : " + node[index]);
+	  parentNodeStack.push(node); // 親フォルダを保存
 	  createHTML(node[index].children);
 	  node = node[index].children;
 	}
