@@ -103,6 +103,9 @@ window.onload = function() {
     window.addEventListener('keydown', function(e){
 
       var code = String.fromCharCode(e.keyCode);
+      var isNewTab = true;
+      if(e.altKey) // ⌥
+	isNewTab = false;
 
       // if(e.metaKey) { // ⌘
       // 	document.getElementById('bookmark_list').innerHTML = '⌘';
@@ -119,9 +122,17 @@ window.onload = function() {
       index = keies.indexOf(code);
       if(index !== -1) {
 	if( isPage(node[index]) ) {
-	  chrome.tabs.create({
+	  var data = {
 	    url : node[index].url
-	  });
+	  };
+	  if(isNewTab) { // 新しいタブで開く 
+	    chrome.tabs.create(data);
+	  } else { // 現在のタブで開く
+	    chrome.tabs.update(
+	      undefined, // デフォルトで現在のタブを選択
+	      data
+	    );
+	  }
 	} else {
 	  createHTML(node[index].children);
 	  node = node[index].children;
