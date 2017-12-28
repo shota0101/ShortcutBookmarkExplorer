@@ -143,12 +143,9 @@ window.onload = function() {
 	return;
       }
 
-      var isNewTab = true;
-      if(e.altKey) // ⌥
-	isNewTab = false;
-
+      var isNewTab = e.ctrlKey ? false : true;
       // ⌘ → e.metaKey
-      // ^ → e.ctrlKey
+      // ⌥ → e.altKey
 
       var index = -1;
       if(e.shiftKey === false) { // ⇧
