@@ -121,13 +121,8 @@ window.onload = function() {
       if(e.altKey) // ⌥
 	isNewTab = false;
 
-      // if(e.metaKey) { // ⌘
-      // 	document.getElementById('bookmark_list').innerHTML = '⌘';
-      // }else if(e.ctrlKey) { // ^
-      // 	document.getElementById('bookmark_list').innerHTML = '^';
-      // }else if(e.altKey) { // ⌥
-      // 	document.getElementById('bookmark_list').innerHTML = '⌥';
-      // }
+      // ⌘ → e.metaKey
+      // ^ → e.ctrlKey
 
       var index = -1;
       if(e.shiftKey === false) { // ⇧
