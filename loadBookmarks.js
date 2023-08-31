@@ -1,4 +1,6 @@
-var keies = 'asdfghjklqwertyuiopzxcvbnm1234567890ASDFGHJKLQWERTYUIOPZXCVBNM';
+// var keies = 'asdfghjklqwertyuiopzxcvbnm1234567890ASDFGHJKLQWERTYUIOPZXCVBNM';
+var keies = 'asdfgqwertzxcvb12345lkjhpoiuymn09876';
+
 var node = null;
 var parentNodeStack = [];
 
