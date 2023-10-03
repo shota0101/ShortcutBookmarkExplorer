@@ -135,7 +135,7 @@ window.onload = function() {
 
     window.addEventListener('keydown', function(e){ // キー入力時の処理
       
-      if(e.key === "Backspace"){ // Backspaceで親ディレクトリに戻る
+      if(e.key === 'Backspace' || e.key === 'z'){ // 親ディレクトリに戻る
 	backToParentNode();
 	return;
       }
